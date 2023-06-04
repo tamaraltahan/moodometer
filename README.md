@@ -12,12 +12,12 @@ Inspired by my fitbit app's partial implementation of the basic logging mood, bu
 
 Progress:
 
-✅ starting template for entering submissions.
-✅ Navigation banner
+✅ starting template for entering submissions.\
+✅ Navigation banner\
 
-🚧➡️ decided whether or not to save data to cloud or local storage
-❌ Saving data
-❌ Reading saved data
-❌ History tab
-❌ Notes tab
-❌ polish
+🚧➡️ decided whether or not to save data to cloud or local storage\
+❌ Saving data\
+❌ Reading saved data\
+❌ History tab\
+❌ Notes tab\
+❌ polish\
