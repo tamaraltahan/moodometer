@@ -13,10 +13,12 @@ Inspired by my fitbit app's partial implementation of the basic logging mood, bu
 Progress:
 
 ✅ starting template for entering submissions.\
-✅ Navigation banner\
-
-🚧➡️ decided whether or not to save data to cloud or local storage\
-❌ Saving data\
+✅ Navigation banner \
+✅ decided whether or not to save data to cloud or local storage\
+⚠️ Using Async Storage\
+Online DB, while a good challenge, poses the need to introduce a login management system - outside the scope of this project (may revisit in future)
+      
+🚧➡️ Saving data\
 ❌ Reading saved data\
 ❌ History tab\
 ❌ Notes tab\
