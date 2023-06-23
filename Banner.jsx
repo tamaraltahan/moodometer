@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, TouchableOpacity, Text } from "react-native";
 
 const Banner = () => {
-  const [activeTab, setActiveTab] = useState(null);
+  const [activeTab, setActiveTab] = useState("New Entry");
 
   const handleTabPress = (tabName) => {
     setActiveTab(tabName);

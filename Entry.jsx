@@ -8,6 +8,7 @@ import {
   TextInput,
 } from "react-native";
 
+
 const Entry = () => {
   const [score, setScore] = useState(0);
   const [textEntry, setTextEntry] = useState("");
@@ -37,8 +38,22 @@ const Entry = () => {
     setSelectedEmojiIndex(index);
   };
 
-  const handleSubmit = () => {
-    console.log("Button pressed!");
+  const handleSubmit = async (value, note) => {
+    const now = new Date();
+
+    const day = String(now.getDate()).padStart(2, "0");
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const year = now.getFullYear();
+
+    const formattedDate = `${month}/${day}/${year}`;
+
+    const entry = {
+      value,
+      note,
+      date: formattedDate,
+    };
+
+    console.log(entry);
   };
 
   return (
@@ -78,7 +93,7 @@ const Entry = () => {
       </View>
       <View style={styles.buttonContainer}>
         <Button
-          onPress={handleSubmit}
+          onPress={() => handleSubmit(score, textEntry)} // Provide a callback function
           title="Submit"
           disabled={selectedEmojiIndex === null}
         />
