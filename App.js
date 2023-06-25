@@ -1,18 +1,42 @@
 // import { StatusBar } from "expo-status-bar";
-import React from "react";
 import { StyleSheet, View } from "react-native";
 import Entry from "./components/Entry";
 import Banner from "./components/Banner";
-import Authenticator from "./components/Authenticator"
+import Authenticator from "./components/Authenticator";
+import { useState, useEffect } from "react";
+
+// import firebase from "firebase/app";
+import { auth } from "./config/Firebase";
 
 export default function App() {
+  
+  const [logged, setLogged] = useState(false);
+
+  useEffect(() => {
+    const checkLoggedIn = () => {
+      auth.onAuthStateChanged((user) => {
+        setLogged(user != null);
+      });
+    };
+
+    checkLoggedIn();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Banner />
-      <Authenticator />
-      <View style={styles.contentContainer}>
-        <Entry />
-      </View>
+      {logged ? (
+        <View>
+          <Banner />
+          <Authenticator />
+          <View style={styles.contentContainer}>
+            <Entry />
+          </View>
+        </View>
+      ) : (
+        <View>
+          <Authenticator />
+        </View>
+      )}
     </View>
   );
 }
