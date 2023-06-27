@@ -7,13 +7,16 @@ import {
   Button,
   TextInput,
 } from "react-native";
-
+import { db } from "../config/Firebase";
+import { collection, serverTimestamp, addDoc } from "firebase/firestore";
 
 const Entry = () => {
   const [score, setScore] = useState(0);
   const [textEntry, setTextEntry] = useState("");
   const [wordCount, setWordCount] = useState(0);
   const [selectedEmojiIndex, setSelectedEmojiIndex] = useState(null);
+
+  const entryCollection = collection(db, "Entries");
 
   const emojis = [
     { emoji: "😁", value: 2 },
@@ -39,21 +42,23 @@ const Entry = () => {
   };
 
   const handleSubmit = async (value, note) => {
-    const now = new Date();
+    const now = serverTimestamp();
 
-    const day = String(now.getDate()).padStart(2, "0");
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const year = now.getFullYear();
+    try {
+      const entry = {
+        datetime: now,
+        note,
+        value,
+      };
 
-    const formattedDate = `${month}/${day}/${year}`;
-
-    const entry = {
-      value,
-      note,
-      date: formattedDate,
-    };
-
-    console.log(entry);
+      // const docRef = await addDoc(entryCollection, entry);
+      // console.log("Document written with ID: ", docRef.id);
+      await addDoc(entryCollection, entry);
+      setTextEntry("");
+      setWordCount("");
+    } catch (err) {
+      console.error("Error pushing data to database: ", err);
+    }
   };
 
   return (
@@ -152,7 +157,7 @@ const styles = StyleSheet.create({
   wordCount: {
     fontSize: 12,
     paddingLeft: 20,
-    color: "white"
+    color: "white",
   },
 });
 
