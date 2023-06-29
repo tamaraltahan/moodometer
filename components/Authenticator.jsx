@@ -1,12 +1,36 @@
 import { TouchableOpacity, View, Image, StyleSheet, Text } from "react-native";
 import { signInWithPopup, signOut } from "firebase/auth";
-import { auth, googleProvider } from "../config/Firebase";
+import { googleProvider, db, auth } from "../config/Firebase";
 
 const Authenticator = ({ onLogin }) => {
   const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
       onLogin();
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        const googleUserId = currentUser.uid;
+        const email = currentUser.email;
+
+        // Check if the user already exists
+        const userRef = db.collection("Users").doc(googleUserId);
+        const userSnapshot = await userRef.get();
+
+        if (userSnapshot.exists) {
+          // User already exists, no need to create a new collection
+          console.log("User already exists");
+        } else {
+          // User does not exist, create a new collection with a unique ID
+          const userCollectionRef = db
+            .collection("Users")
+            .doc(googleUserId)
+            .collection();
+          await userCollectionRef.doc("Profile").set({
+            email,
+          });
+          console.log("User collection created");
+        }
+      }
     } catch (err) {
       console.error(err);
     }
@@ -24,11 +48,11 @@ const Authenticator = ({ onLogin }) => {
     <View>
       {auth.currentUser ? (
         <View style={styles.containerRight}>
-          {/* Render the logged-in segment */}
           <TouchableOpacity onPress={() => logout()}>
             <Image
+              referrerpolicy="no-referrer"
               style={styles.profilePic}
-              source={{ uri: auth.currentUser?.photoURL }}
+              source={{ uri: auth?.currentUser?.photoURL }}
             />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => logout()}>
@@ -37,7 +61,6 @@ const Authenticator = ({ onLogin }) => {
         </View>
       ) : (
         <View style={styles.containerCenter}>
-          {/* Render the logged-out segment */}
           <Text style={styles.text}>Please sign in to get started</Text>
           <TouchableOpacity onPress={() => signInWithGoogle()}>
             <Image
@@ -61,7 +84,7 @@ const styles = StyleSheet.create({
   },
   containerRight: {
     justifyContent: "center",
-    alignItems: "flex-end", // Align items to the right
+    alignItems: "flex-end",
     marginTop: 50,
     marginRight: 25,
   },

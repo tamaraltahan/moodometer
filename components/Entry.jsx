@@ -7,7 +7,7 @@ import {
   Button,
   TextInput,
 } from "react-native";
-import { db } from "../config/Firebase";
+import { db, auth } from "../config/Firebase";
 import { collection, serverTimestamp, addDoc } from "firebase/firestore";
 
 const Entry = () => {
@@ -16,7 +16,9 @@ const Entry = () => {
   const [wordCount, setWordCount] = useState(0);
   const [selectedEmojiIndex, setSelectedEmojiIndex] = useState(null);
 
-  const entryCollection = collection(db, "Entries");
+  const user = auth.currentUser;
+
+  const entryCollection = collection(db, "Users", user.uid, "Entries");
 
   const emojis = [
     { emoji: "😁", value: 2 },
@@ -51,11 +53,10 @@ const Entry = () => {
         value,
       };
 
-      // const docRef = await addDoc(entryCollection, entry);
-      // console.log("Document written with ID: ", docRef.id);
       await addDoc(entryCollection, entry);
       setTextEntry("");
       setWordCount("");
+      setSelectedEmojiIndex(null);
     } catch (err) {
       console.error("Error pushing data to database: ", err);
     }
@@ -98,7 +99,7 @@ const Entry = () => {
       </View>
       <View style={styles.buttonContainer}>
         <Button
-          onPress={() => handleSubmit(score, textEntry)} // Provide a callback function
+          onPress={() => handleSubmit(score, textEntry)}
           title="Submit"
           disabled={selectedEmojiIndex === null}
         />
