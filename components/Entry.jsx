@@ -10,6 +10,9 @@ import {
 import { db, auth } from "../config/Firebase";
 import { collection, serverTimestamp, addDoc } from "firebase/firestore";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Entry = () => {
   const [score, setScore] = useState(0);
   const [textEntry, setTextEntry] = useState("");
@@ -45,18 +48,29 @@ const Entry = () => {
 
   const handleSubmit = async (value, note) => {
     const now = serverTimestamp();
-
+  
     try {
       const entry = {
         datetime: now,
         note,
         value,
       };
-
+  
       await addDoc(entryCollection, entry);
       setTextEntry("");
       setWordCount("");
       setSelectedEmojiIndex(null);
+  
+      toast.success('Entry Submitted!', {
+        position: "bottom-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: "dark",
+        });
+  
     } catch (err) {
       console.error("Error pushing data to database: ", err);
     }
@@ -64,6 +78,18 @@ const Entry = () => {
 
   return (
     <View>
+      <ToastContainer
+      position="bottom-center"
+      autoClose={1000}
+      hideProgressBar
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss={false}
+      draggable={false}
+      pauseOnHover={false}
+      theme="dark"
+      />
       <View style={styles.container}>
         {emojis.map((emoji, index) => (
           <TouchableOpacity
