@@ -18,7 +18,7 @@ Progress:
 ✅ OAuth\
 ✅ Saving data\
 ✅ Reading saved data\
-✅ Chart tab\
+✅ Chart tab
 
 My chart component has limitations which prevent me from customizing it as well as I wanted to, it still serves its purpose. I will be thinking about how this chart will scale over time & more entries but for now, it works as intended and I will be moving on.
 
