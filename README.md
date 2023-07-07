@@ -17,15 +17,16 @@ Progress:
 ✅ decided whether or not to save data to cloud or local storage\
 ✅ OAuth\
 ✅ Saving data\
+✅ Reading saved data\
+✅ Chart tab\
 
-Next step is to implement the history tab.
-I'm aiming to display an average mood, and a chart of mood over time 
+My chart component has limitations which prevent me from customizing it as well as I wanted to, it still serves its purpose. I will be thinking about how this chart will scale over time & more entries but for now, it works as intended and I will be moving on.
 
-A feature I would like to add but may need some backend support is to be able to segment scores between weeks and months.
+The next step is to put the RUD in CRUD and be able to read, update, and delete my entries.
 
-The history tab should pull db data of submissions, plot scores, & show avg to begin.
+as a side note, figuring out how to pull my data from firestore and isolating the values I needed (no less figuring out how to read them) was way more difficult than I anticipated.
 
-❌ Reading saved data\
+I am sure I'm going to struggle with implementing my history tab as I'm planning.
+
 ❌ History tab\
-❌ Notes tab\
-❌ polish\
+❌ polish
