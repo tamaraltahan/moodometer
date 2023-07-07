@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity, Text } from "react-native";
 import Entry from "./Entry";
-import History from "./History";
+import Chart from "./Chart";
 import Authenticator from "./Authenticator";
 
 const Banner = () => {
@@ -14,8 +14,8 @@ const Banner = () => {
   const renderSelectedComponent = () => {
     if (activeTab === "New Entry") {
       return <Entry />;
-    } else if (activeTab === "History") {
-      return <History />;
+    } else if (activeTab === "Chart") {
+      return <Chart />;
     } else {
       return (
         <View>
@@ -59,15 +59,15 @@ const Banner = () => {
             alignItems: "center",
             backgroundColor: "grey",
           }}
-          onPress={() => handleTabPress("History")}
+          onPress={() => handleTabPress("Chart")}
         >
           <Text
             style={{
-              color: activeTab === "History" ? "#000" : "#fff",
-              fontWeight: activeTab === "History" ? "bold" : "normal",
+              color: activeTab === "Chart" ? "#000" : "#fff",
+              fontWeight: activeTab === "Chart" ? "bold" : "normal",
             }}
           >
-            History
+            Chart
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -77,15 +77,15 @@ const Banner = () => {
             alignItems: "center",
             backgroundColor: "grey",
           }}
-          onPress={() => handleTabPress("Notes")}
+          onPress={() => handleTabPress("History")}
         >
           <Text
             style={{
-              color: activeTab === "Notes" ? "#000" : "#fff",
-              fontWeight: activeTab === "Notes" ? "bold" : "normal",
+              color: activeTab === "History" ? "#000" : "#fff",
+              fontWeight: activeTab === "History" ? "bold" : "normal",
             }}
           >
-            Notes
+            History
           </Text>
         </TouchableOpacity>
       </View>
