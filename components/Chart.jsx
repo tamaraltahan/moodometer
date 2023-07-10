@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { db, auth } from "../config/Firebase";
 import { query, getDocs, collection } from "firebase/firestore";
 import { View, Text, StyleSheet } from "react-native";
 import Chart from "./LineChart";
+import Gauge from "./Gauge";
 
 const History = () => {
   const [chartScores, setChartScores] = useState([]);
   const [chartDates, setChartDates] = useState([]);
+  const [averageScore, setAverageScore] = useState(null);
 
   const user = auth.currentUser;
 
@@ -35,6 +37,11 @@ const History = () => {
 
         setChartDates(convertedEntries.map((entry) => entry.datetime));
         setChartScores(convertedEntries.map((entry) => entry.value));
+
+        const average = getAverageScore(
+          convertedEntries.map((entry) => entry.value)
+        );
+        setAverageScore(average);
       } catch (err) {
         console.error(err);
       }
@@ -43,9 +50,9 @@ const History = () => {
     getEntries();
   }, [user.uid]);
 
-  const getAverageScore = () => {
-    const sum = chartScores.reduce((a, b) => a + b, 0);
-    return sum / chartScores.length;
+  const getAverageScore = (scores) => {
+    const sum = scores.reduce((a, b) => a + b, 0);
+    return (sum / scores.length).toFixed(2);
   };
 
   const getEmoji = (val) => {
@@ -63,15 +70,33 @@ const History = () => {
       return "💀";
     }
   };
-  
 
   return (
     <View style={styles.container}>
       <Text style={styles.titleText}>Mood over time</Text>
       <Chart scores={chartScores} dates={chartDates} />
+
+      {averageScore !== null ? (
+        <View
+          style={{
+            width: 750,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: 20,
+          }}
+        >
+          <Gauge value={averageScore} />
+        </View>
+      ) : (
+        <Text>Loading...</Text>
+      )}
+
       <View style={styles.textContainer}>
         <Text style={styles.text}>
-          Average Mood is: {getAverageScore().toFixed(2)} {getEmoji(getAverageScore().toFixed(2))}
+          Average Mood is: {averageScore} {getEmoji(averageScore)}
         </Text>
         <Text style={styles.text}>
           Number of Entries is: {chartScores.length}
@@ -99,7 +124,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     textAlign: "center",
     marginBottom: 30,
-  }
+  },
 });
 
 export default History;
