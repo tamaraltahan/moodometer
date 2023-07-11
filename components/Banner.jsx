@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { View, TouchableOpacity, Text } from "react-native";
 import Entry from "./Entry";
 import Chart from "./Chart";
+import History from "./History";
 import Authenticator from "./Authenticator";
 
-const Banner = () => {
-  const [activeTab, setActiveTab] = useState("New Entry");
+const Banner = ({chartData}) => {
+  // const [activeTab, setActiveTab] = useState("New Entry");
+  const [activeTab, setActiveTab] = useState("History");
 
   const handleTabPress = (tabName) => {
     setActiveTab(tabName);
@@ -15,13 +17,9 @@ const Banner = () => {
     if (activeTab === "New Entry") {
       return <Entry />;
     } else if (activeTab === "Chart") {
-      return <Chart />;
+      return <Chart data={chartData}  />;
     } else {
-      return (
-        <View>
-          {/* <Text>⚠️Under Construction⚠️</Text> */}
-        </View>
-      );
+      return <History data={chartData}/>;
     }
   };
 
@@ -31,13 +29,13 @@ const Banner = () => {
         style={{
           flexDirection: "row",
           backgroundColor: "#f1f1f1",
-          marginTop: 0, // Add margin-top here
+          marginTop: 0,
         }}
       >
         <TouchableOpacity
           style={{
             flex: 1,
-            paddingVertical: 10,
+            paddingVertical: 20,
             alignItems: "center",
             backgroundColor: "grey",
           }}
@@ -55,7 +53,7 @@ const Banner = () => {
         <TouchableOpacity
           style={{
             flex: 1,
-            paddingVertical: 10,
+            paddingVertical: 20,
             alignItems: "center",
             backgroundColor: "grey",
           }}
@@ -73,7 +71,7 @@ const Banner = () => {
         <TouchableOpacity
           style={{
             flex: 1,
-            paddingVertical: 10,
+            paddingVertical: 20,
             alignItems: "center",
             backgroundColor: "grey",
           }}

@@ -1,7 +1,7 @@
 import { Dimensions, View } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 
-const Chart = ({ scores, dates }) => {
+const MoodChart = ({ scores, dates }) => {
   return (
     <View>
       <LineChart
@@ -50,4 +50,4 @@ const Chart = ({ scores, dates }) => {
   );
 };
 
-export default Chart;
+export default MoodChart;

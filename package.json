@@ -20,6 +20,7 @@
     "react-gauge-chart": "^0.4.1",
     "react-native": "0.71.8",
     "react-native-chart-kit": "^6.12.0",
+    "react-native-reanimated-table": "^0.0.2",
     "react-native-svg": "13.4.0",
     "react-native-web": "~0.18.11",
     "react-toastify": "^9.1.3"

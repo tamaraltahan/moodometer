@@ -1,19 +1,21 @@
 import React from "react";
 import GaugeChart from "react-gauge-chart";
 
-const Gauge = ({ value }) => {
-  const totalValue = 6;
+const Gauge = (average) => {
 
-  const getPercentage = () => {
-    (value + 3) / totalValue;
-  };
+  const {value} = average
+
+  const getPercent = (n) => {
+    const percent = (Number(value) + 3) / 6
+    return percent;
+  }
 
   return (
     <GaugeChart
       nrOfLevels={30}
       colors={["#FF5F6D", "#008000"]}
       arcWidth={0.45}
-      percent={getPercentage()}
+      percent={getPercent(value)}
       textColor="#FFF"
       needleColor="#FF5F6D"
       hideText

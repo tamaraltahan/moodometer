@@ -1,59 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { db, auth } from "../config/Firebase";
-import { query, getDocs, collection } from "firebase/firestore";
+import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import Chart from "./LineChart";
+import MoodChart from "./MoodChart";
 import Gauge from "./Gauge";
 
-const History = () => {
-  const [chartScores, setChartScores] = useState([]);
-  const [chartDates, setChartDates] = useState([]);
-  const [averageScore, setAverageScore] = useState(null);
+const Chart = ( {data} ) => {
+  // console.log("chart: " + data)
+  if (!data) {
+    return <Text>Loading...</Text>;
+  }
 
-  const user = auth.currentUser;
-
-  useEffect(() => {
-    const getEntries = async () => {
-      const q = query(collection(db, "Users", user.uid, "Entries"));
-      try {
-        const querySnapshot = await getDocs(q);
-        const entriesData = [];
-        querySnapshot.forEach((doc) => {
-          entriesData.push(doc.data());
-        });
-
-        const convertedEntries = entriesData.map((entry) => {
-          const datetime = new Date(entry.datetime.seconds * 1000);
-          const localDatetime = datetime.toLocaleString();
-          return {
-            ...entry,
-            datetime: localDatetime,
-          };
-        });
-
-        convertedEntries.sort(
-          (a, b) => new Date(a.datetime) - new Date(b.datetime)
-        );
-
-        setChartDates(convertedEntries.map((entry) => entry.datetime));
-        setChartScores(convertedEntries.map((entry) => entry.value));
-
-        const average = getAverageScore(
-          convertedEntries.map((entry) => entry.value)
-        );
-        setAverageScore(average);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    getEntries();
-  }, [user.uid]);
-
-  const getAverageScore = (scores) => {
-    const sum = scores.reduce((a, b) => a + b, 0);
-    return (sum / scores.length).toFixed(2);
-  };
+  const { chartScores, chartDates, averageScore } = data;
 
   const getEmoji = (val) => {
     if (val > 1) {
@@ -74,7 +30,7 @@ const History = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.titleText}>Mood over time</Text>
-      <Chart scores={chartScores} dates={chartDates} />
+      <MoodChart scores={chartScores} dates={chartDates} />
 
       {averageScore !== null ? (
         <View
@@ -127,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default History;
+export default Chart;
