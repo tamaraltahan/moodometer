@@ -75,11 +75,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     marginBottom: 10,
+    color: 'white',
   },
   titleText: {
     fontSize: 30,
     textAlign: "center",
     marginBottom: 30,
+    color: 'white',
   },
 });
 

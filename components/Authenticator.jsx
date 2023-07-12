@@ -65,7 +65,7 @@ const Authenticator = ({ onLogin }) => {
           <TouchableOpacity onPress={() => signInWithGoogle()}>
             <Image
               style={styles.image}
-              source={require("../assets/google_signin_buttons/web/2x/btn_google_signin_dark_focus_web@2x.png")}
+              source={require("../assets/google_signin_buttons/web/2x/btn_google_signin_dark_focus_web2x.png")}
             />
           </TouchableOpacity>
         </View>
