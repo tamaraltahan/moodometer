@@ -18,15 +18,26 @@ Progress:
 ✅ OAuth\
 ✅ Saving data\
 ✅ Reading saved data\
-✅ Chart tab
+✅ Chart tab\
+✅ History tab
 
-My chart component has limitations which prevent me from customizing it as well as I wanted to, it still serves its purpose. I will be thinking about how this chart will scale over time & more entries but for now, it works as intended and I will be moving on.
+I have a lot to do here to clean up the whole project:
 
-The next step is to put the RUD in CRUD and be able to read, update, and delete my entries.
+1. Support deletion & updating of entries. This may need me to collect and pass my data differently since I'm unbinding data as I pass it through different components. Maybe querying the database with `where` will work? Need time for R&D.
+2. clean up all my packages so that it actually runs on mobile. So far I've only tested & ran the application on my desktop and I tried it on mobile for the 1st time to be greeted with several bundling errors which I'm working on quashing. 
+3. At least try to clean up all the errors that appear on the consule when rendering my Chart component.
+4. Figure out what to do with the x-axis labels on my chart. Already overlapping when I shrink the page by a small amount.
+5. Maybe some stylzation adjustments for the banner and the text & gauge in the chart tab
+6. chart component's dots clickable should be dealt with. Either hide/remove it or figure out how to attach useful information relevant to the selected entry.
 
-as a side note, figuring out how to pull my data from firestore and isolating the values I needed (no less figuring out how to read them) was way more difficult than I anticipated.
+& a future feature release I could work on if I want is Modify the chart such that filtering by year/month/week is supported.
+As in see entries by:
+day (maybe not)\
+week\
+month\
+year\
+all
 
-I am sure I'm going to struggle with implementing my history tab as I'm planning.
+It would also be nice to be able to select which month or which year, but complex and not necessary. 
 
-❌ History tab\
 ❌ polish
