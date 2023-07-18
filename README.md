@@ -1,5 +1,7 @@
 
-# moodometer# Dead / No longer Developing
+# moodometer
+
+# Dead / No longer Developing
 
 I've run into so many problems trying to get the configurations right to run native code on Mobile.
 
